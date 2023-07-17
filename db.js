@@ -1,16 +1,19 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
-module.exports = async function connection() {
-    try {
-        const connectionParams = {
-            useNewUrlParser: true,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-        };
-        await mongoose.connect(process.env.DB, connectionParams);
-        console.log("connected to database");
-    } catch (error) {
-        console.log(error);
-        console.log("could not connect to database");
-    }
+const mongoDBUri = `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@${process.env.MONGO_DB_DATABASE}.rqnyzcx.mongodb.net/`;
+
+const connectDB = async () => {
+  try {
+    await mongoose.connect(mongoDBUri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+    process.exit(1);
+  }
 };
+
+module.exports = connectDB;
