@@ -94,7 +94,7 @@ const getUserByWalletAddress = async (req, res) => {
     })
     .catch((error) => {
       console.error("Error retrieving user:", error);
-      res.status(500).json({ error: "Failed to retrieve user" });
+      return res.status(500).json({ error: "Failed to retrieve user" });
     });
 };
 
